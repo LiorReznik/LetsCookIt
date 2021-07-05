@@ -6,7 +6,9 @@ import javax.persistence.Id;
 
 @Entity
 public class Direction {
-    private @Id @GeneratedValue Integer id;
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String direction;
 
     protected Direction() {

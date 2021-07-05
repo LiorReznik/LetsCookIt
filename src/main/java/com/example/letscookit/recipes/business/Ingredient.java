@@ -6,7 +6,9 @@ import javax.persistence.Id;
 
 @Entity
 public class Ingredient {
-    private @Id @GeneratedValue Integer id;
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String ingredient;
 
     public Ingredient(String ingredient) {
