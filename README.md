@@ -1,5 +1,5 @@
 LetsCookIt - Recipes management system - Java, Spring (Boot, MVC, Security,AOP), JPA data
-Multi-user web service for managing recipes (storing, retrieving, deleting and updating).
+Multi-user web service for managing recipes  (store, retrieve, delete, search and update).
 this is a Level 2 RESTful API, the API was developed with the following principles in mind:
 1. Loosely coupled Architecture.
 2. Layered Architecture(presentational, business, persistence and database).
