@@ -1,6 +1,7 @@
 package com.example.letscookit.recipes.business;
 
 import com.example.letscookit.recipes.persistence.RecipeRepository;
+import com.example.letscookit.security.GetUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,13 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
-
+    @Autowired
+    private GetUser getUser;
 
     @Override
     public int save(Recipe recipe) {
-        return this.recipeRepository.save(recipe).getID();
+        recipe.setUser(getUser.getUser());
+        return this.recipeRepository.save(recipe).getId();
     }
 
     @Override
@@ -84,4 +87,6 @@ public class RecipeServiceImpl implements RecipeService {
         List<Recipe> recipes = this.recipeRepository.findAllByCategoryIgnoreCaseOrderByDateDesc(category);
         return recipes.stream().map(x -> this.convertRecipeToMap(x)).collect(Collectors.toList());
     }
+
+
 }

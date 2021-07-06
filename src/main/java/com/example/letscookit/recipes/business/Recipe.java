@@ -1,7 +1,7 @@
 package com.example.letscookit.recipes.business;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.example.letscookit.users.business.User;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -10,7 +10,6 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@JsonIgnoreProperties(value = {"id"})
 @Entity
 public class Recipe {
     @Id
@@ -28,28 +27,33 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id")
     private List<Ingredient> ingredients;
-
     @NotEmpty(message = "The recipe should contain at least one direction")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id")
     private List<Direction> directions;
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    private User user;
 
     protected Recipe() {
     }
 
 
-    public Recipe(String name, String description, List<Ingredient> ingredients, List<Direction> directions) {
+    public Recipe(String name, String description, String category, LocalDateTime date, List<Ingredient> ingredients, List<Direction> directions, User user) {
         this.name = name;
         this.description = description;
+        this.category = category;
+        this.date = date;
         this.ingredients = ingredients;
         this.directions = directions;
+        this.user = user;
     }
 
     public LocalDateTime getDate() {
         return date;
     }
 
-    public int getID() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -99,5 +103,13 @@ public class Recipe {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

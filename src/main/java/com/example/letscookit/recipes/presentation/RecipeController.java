@@ -4,6 +4,7 @@ import com.example.letscookit.recipes.business.Recipe;
 import com.example.letscookit.recipes.business.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,6 +20,7 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @PostMapping("/new")
+    @ResponseStatus(HttpStatus.CREATED)
     public Map<String, Integer> setRecipe(@Valid @RequestBody Recipe recipe) {
         int id = this.recipeService.save(recipe);
         return Map.of("id", id);
@@ -31,12 +33,14 @@ public class RecipeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@creatorCheck.check(#id,principal)")
     public void delete(@PathVariable int id) {
         this.recipeService.delete(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@creatorCheck.check(#id,principal)")
     public void update(@PathVariable int id, @Valid @RequestBody Recipe recipe) {
         this.recipeService.update(id, recipe);
     }

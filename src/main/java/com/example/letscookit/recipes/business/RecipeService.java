@@ -18,4 +18,7 @@ public interface RecipeService {
 
     List<Map<String, ?>> searchByCategory(String category);
 
+
 }
+
+
